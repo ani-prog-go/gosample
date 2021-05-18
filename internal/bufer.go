@@ -37,8 +37,7 @@ type Us struct {
 	Name string
 	Geo  Geoa
 	Fam  string
-
-	Age int
+	Age  int
 }
 
 // записываем струтктуру в буфер

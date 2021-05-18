@@ -37,8 +37,7 @@ type UsArr struct {
 	Name string
 	Geo  Geoa
 	Fam  string
-
-	Age int
+	Age  int
 }
 type userM []UsArr
 
