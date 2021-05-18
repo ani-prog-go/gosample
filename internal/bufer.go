@@ -65,15 +65,16 @@ func CodeToBufer() (bytes.Buffer, error) {
 }
 
 // получаем структуру из буфера
+// , и вывод JSON в форматированном виде с отступами
 func CodeGetBuffer(buf bytes.Buffer) {
 	var usera Us
 	Get(buf, &usera)
-	data, err := json.MarshalIndent(&usera, "", "    ")
+
+	data, err := json.MarshalIndent(&usera, "", "   ") // отступы
 
 	if err != nil {
 		println(err)
 	}
-	//println(">>:", &data)
 	fmt.Println(string(data))
 	//	println(usera.Name, usera.Fam, usera.Age, usera.Geo.Addr, usera.Geo.Dom)
 }

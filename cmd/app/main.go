@@ -20,4 +20,8 @@ func main() {
 	internal.CodeGetBuffer(buf)
 	buf2, _ := internal.CodeToBuferArr()
 	internal.CodeGetBufferArr(buf2)
+	internal.ListDirContents(".", []string{})
+	internal.LoadJsonFile()
+	internal.LoadJsonHtml()
+	internal.CriptoAes256()
 }

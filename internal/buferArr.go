@@ -22,7 +22,6 @@ func SetArr(value interface{}) (bytes.Buffer, error) {
 }
 
 //Функция Get читаем структуру из буфера
-
 func GetArr(buf bytes.Buffer, value interface{}) error {
 
 	//return gob.NewDecoder(bytes.NewReader(buf.Bytes())).Decode(value)
@@ -73,7 +72,6 @@ func CodeToBuferArr() (bytes.Buffer, error) {
 		println(err)
 		return bytes.Buffer{}, err
 	}
-	println(buf.Bytes())
 	return buf, nil
 	//CodeGetBuffer(buf)
 

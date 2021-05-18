@@ -20,7 +20,8 @@ func BoltJson()
     запись чтение из базы boltDB
 
 func CodeGetBuffer(buf bytes.Buffer)
-    получаем структуру из буфера
+    получаем структуру из буфера , и вывод JSON в форматированном виде с
+    отступами
 
 func CodeGetBufferArr(buf bytes.Buffer)
     получаем массив структур из буфера
@@ -35,6 +36,8 @@ func Get(buf bytes.Buffer, value interface{}) error
     Функция Get получем структуры из буфера
 
 func GetArr(buf bytes.Buffer, value interface{}) error
+    Функция Get читаем структуру из буфера
+
 func ListDir()
 func ListDirGorutin()
     используем два канала один для данных другой для завершения функции
