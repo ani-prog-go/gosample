@@ -20,6 +20,8 @@ func getBoltDB() (*bolt.DB, error) {
 		return db, nil
 	}
 }
+
+// Работа с BD boltDB
 func Bolt() {
 	// Откройте файл данных my.db в вашем текущем каталоге..
 	//Он будет создан, если его не существует.
@@ -63,7 +65,7 @@ type User struct {
 	Age  int
 }
 
-////
+// запись чтение из базы boltDB
 func BoltJson() {
 
 	user := User{

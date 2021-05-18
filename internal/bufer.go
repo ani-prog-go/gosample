@@ -3,9 +3,12 @@ package internal
 import (
 	"bytes"
 	"encoding/gob"
+	"encoding/json"
+	"fmt"
 )
 
 //https://golang.org/pkg/encoding/gob/  примеры
+// загоняем структуру в буфер
 func Set(value interface{}) (bytes.Buffer, error) {
 	var buf bytes.Buffer
 	var encoder = gob.NewEncoder(&buf)
@@ -19,7 +22,7 @@ func Set(value interface{}) (bytes.Buffer, error) {
 	return buf, nil
 }
 
-//Функция Get является обратной к функции set:
+//Функция Get получем структуры из буфера
 func Get(buf bytes.Buffer, value interface{}) error {
 
 	//return gob.NewDecoder(bytes.NewReader(buf.Bytes())).Decode(value)
@@ -38,6 +41,7 @@ type Us struct {
 	Age int
 }
 
+// записываем струтктуру в буфер
 func CodeToBufer() (bytes.Buffer, error) {
 
 	usera := Us{
@@ -60,8 +64,17 @@ func CodeToBufer() (bytes.Buffer, error) {
 	//CodeGetBuffer(buf)
 
 }
+
+// получаем структуру из буфера
 func CodeGetBuffer(buf bytes.Buffer) {
 	var usera Us
 	Get(buf, &usera)
-	println(usera.Name, usera.Fam, usera.Age, usera.Geo.Addr, usera.Geo.Dom)
+	data, err := json.MarshalIndent(&usera, "", "    ")
+
+	if err != nil {
+		println(err)
+	}
+	//println(">>:", &data)
+	fmt.Println(string(data))
+	//	println(usera.Name, usera.Fam, usera.Age, usera.Geo.Addr, usera.Geo.Dom)
 }

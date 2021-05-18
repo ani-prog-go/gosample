@@ -1,3 +1,4 @@
+// примеры с буфером  структуры в буфер и обратно
 package internal
 
 import (
@@ -6,6 +7,7 @@ import (
 )
 
 //https://golang.org/pkg/encoding/gob/  примеры
+// запись структуры в буфер
 func SetArr(value interface{}) (bytes.Buffer, error) {
 	var buf bytes.Buffer
 	var encoder = gob.NewEncoder(&buf)
@@ -19,7 +21,7 @@ func SetArr(value interface{}) (bytes.Buffer, error) {
 	return buf, nil
 }
 
-//Функция Get является обратной к функции set:
+//Функция Get читаем структуру из буфера
 
 func GetArr(buf bytes.Buffer, value interface{}) error {
 
@@ -40,6 +42,7 @@ type UsArr struct {
 }
 type userM []UsArr
 
+// делаем массив структур и загоняем в буфер
 func CodeToBuferArr() (bytes.Buffer, error) {
 
 	usera := UsArr{
@@ -76,6 +79,8 @@ func CodeToBuferArr() (bytes.Buffer, error) {
 	//CodeGetBuffer(buf)
 
 }
+
+// получаем массив структур из буфера
 func CodeGetBufferArr(buf bytes.Buffer) {
 	var usera userM
 	Get(buf, &usera)
