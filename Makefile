@@ -8,8 +8,8 @@ run: build
 	./bin/main
 
 docs: 
-	go doc -all ./internal > ./doc/internal.md
-	go doc -all ./cmd/app > ./doc/app.md
+	go doc -all -u ./internal > ./doc/internal.md
+	go doc -all -u ./cmd/app > ./doc/app.md
 
 # make run - скомпилирует и запустит
 # make build- скомпилиррует

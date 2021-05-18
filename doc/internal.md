@@ -4,6 +4,13 @@ package internal // import "github.com/ani-prog-go/gosample/internal"
 
 работа с коммандной мтрокой
 
+VARIABLES
+
+var c1 chan string
+var c11 chan string
+var c111 chan string
+var c2 chan string
+
 FUNCTIONS
 
 func Bolt()
@@ -45,6 +52,19 @@ func Set(value interface{}) (bytes.Buffer, error)
 func SetArr(value interface{}) (bytes.Buffer, error)
     https://golang.org/pkg/encoding/gob/ примеры запись структуры в буфер
 
+func findFiles(startDir string)
+func findFiles2(startDir string)
+func findFiles3(startDir string)
+func getBoltDB() (*bolt.DB, error)
+func init()
+func itob(v int) []byte
+    itob returns an 8-byte big endian representation of v.
+
+func saveDb(db *bolt.DB, id int, user User) error
+func walk(s string, d fs.DirEntry, e error) error
+func walkG(s string, d fs.DirEntry, e error) error
+func walkG2(s string, d fs.DirEntry, e error) error
+func walkG3(s string, d fs.DirEntry, e error) error
 
 TYPES
 
@@ -52,6 +72,7 @@ type Cmdstr struct {
 	Str string
 }
 
+var cmdS Cmdstr
 func CommandString() Cmdstr
 
 type Color string
@@ -93,4 +114,8 @@ type User struct {
 	Name string
 	Age  int
 }
+
+func findDb(db *bolt.DB, id int) (User, error)
+
+type userM []UsArr
 
