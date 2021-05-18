@@ -1,0 +1,106 @@
+package internal
+
+import (
+	"encoding/binary"
+	"encoding/json"
+	"fmt"
+	"log"
+	"time"
+
+	bolt "go.etcd.io/bbolt"
+)
+
+func Bolt() {
+	// Откройте файл данных my.db в вашем текущем каталоге..
+	//Он будет создан, если его не существует.
+	//db, err := bolt.Open("my.db", 0600, nil)
+	// timeout если по какимто причинам файл базы данных занят
+	var db *bolt.DB
+	var err error
+	if db, err = bolt.Open("my.db", 0600, &bolt.Options{Timeout: 2 * time.Second}); err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	db.Update(func(tx *bolt.Tx) error {
+		var bucket *bolt.Bucket
+		bucket, err1 := tx.CreateBucket([]byte("configs")) //CreateBucketIfNotExists
+		if err1 != nil {
+			return fmt.Errorf("create bucket: %s", err1)
+		}
+		err2 := bucket.Put([]byte("answer"), []byte("42"))
+		if err2 != nil {
+			return fmt.Errorf("error programm: %s", err2)
+
+		}
+
+		return nil
+	})
+
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("configs"))
+		v := b.Get([]byte("answer"))
+		PrintColor(ColorGreen, fmt.Sprintf("Прочитали из базы: %s\n", v))
+		return nil
+	})
+}
+
+////
+func BoltJson() {
+	type User struct {
+		Id   int
+		Name string
+		Age  int
+	}
+	user := User{
+		Id:   20,
+		Name: "Arkadii",
+		Age:  50,
+	}
+	// Откройте файл данных my.db в вашем текущем каталоге..
+	//Он будет создан, если его не существует.
+	//db, err := bolt.Open("my.db", 0600, nil)
+	// timeout если по какимто причинам файл базы данных занят
+	var db *bolt.DB
+	var err error
+	if db, err = bolt.Open("my.db", 0600, &bolt.Options{Timeout: 2 * time.Second}); err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	db.Update(func(tx *bolt.Tx) error {
+		var bucket *bolt.Bucket
+		bucket, err1 := tx.CreateBucket([]byte("users")) //CreateBucketIfNotExists
+		if err1 != nil {
+			return fmt.Errorf("create bucket: %s", err1)
+		}
+		// Generate ID for the user.
+		// This returns an error only if the Tx is closed or not writeable.
+		// That can't happen in an Update() call so I ignore the error check.
+		// id, _ := bucket.NextSequence()
+		// user.ID = int(id)
+
+		// Marshal user data into bytes.
+		buf, err := json.Marshal(user)
+		if err != nil {
+			return err
+		}
+		err2 := bucket.Put(itob(user.Id), buf)
+		if err2 != nil {
+			return fmt.Errorf("error programm: %s", err2)
+
+		}
+
+		return nil
+	})
+
+}
+
+func findDb(id int) error {
+
+}
+
+// itob returns an 8-byte big endian representation of v.
+func itob(v int) []byte {
+	b := make([]byte, 8)
+	binary.BigEndian.PutUint64(b, uint64(v))
+	return b
+}
