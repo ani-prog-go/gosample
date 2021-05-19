@@ -18,12 +18,14 @@ import (
 )
 
 func CriptoAes256() {
+
 	//--
 	mrand.Seed(time.Now().UnixNano())
 	keyPrefix := []byte("ПреФиксКоде")
 	keyMain := make([]byte, 32-len(keyPrefix))
+
+	mrand.Read(keyMain) // заполняем весь []byte,  никогда не вернет ошибку (documentation)
 	key := append(keyPrefix, keyMain...)
-	mrand.Read(key) // заполняем весь []byte,  никогда не вернет ошибку (documentation)
 	//--
 	//key := []byte("a very very very very secret key") // 32 bytes
 	plaintext := []byte("Эту строку я пытаюсь зашифровать и посмотреть что будет или не будет")

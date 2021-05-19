@@ -1,12 +1,16 @@
 package main
 
 import (
+	"fmt"
 	_ "fmt"
+	"runtime"
+
 	"github.com/ani-prog-go/gosample/internal"
 	"github.com/ani-prog-go/gosample/sample"
 )
 
 func main() {
+	fmt.Printf("Версия Go: %s\n", runtime.Version())
 	cmds := internal.CommandString()
 	//cmds.str
 	println("Ком строка: ", cmds.Str)
